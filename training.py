@@ -78,23 +78,23 @@ def evaluate_model(trainX, trainy, testX=None, testy=None):
 # run an experiment
 # from https://machinelearningmastery.com/how-to-develop-rnn-models-for-human-activity-recognition-time-series-classification/
 def run_experiment(trainX, trainy, testX, testy, repeats=7):
-        scores = []
-        losses = []
+    scores = []
+    losses = []
 
-        # Repeat experiment
-        for r in range(repeats):
-            loss, score = evaluate_model(trainX, trainy, testX, testy)
-            score = score * 100.0
-            print('>#%d: %.3f' % (r+1, score))
-            scores.append(score)
-            losses.append(loss)
+    # Repeat experiment
+    for r in range(repeats):
+        loss, score = evaluate_model(trainX, trainy, testX, testy)
+        score = score * 100.0
+        print('>#%d: %.3f' % (r+1, score))
+        scores.append(score)
+        losses.append(loss)
 
-        # Summarize results across experiments
-        print(scores)
-        print(losses)
+    # Summarize results across experiments
+    print(scores)
+    print(losses)
 
-        m, s = np.mean(scores), np.std(scores)
-        print('Accuracy: %.3f%% (+/-%.3f)' % (m, s))
+    m, s = np.mean(scores), np.std(scores)
+    print('Accuracy: %.3f%% (+/-%.3f)' % (m, s))
 
 # from Jupyter notebook written by team
 def load_file(filename):
@@ -149,4 +149,3 @@ X, y = shuffle(X, y, random_state=640)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42)
 
 run_experiment(X_train, y_train, X_test, y_test)
-
