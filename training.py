@@ -77,7 +77,7 @@ def evaluate_model(trainX, trainy, testX=None, testy=None):
 
 # run an experiment
 # from https://machinelearningmastery.com/how-to-develop-rnn-models-for-human-activity-recognition-time-series-classification/
-def run_experiment(trainX, trainy, testX, testy, repeats=5):
+def run_experiment(trainX, trainy, testX, testy, repeats=7):
         scores = []
         losses = []
 
