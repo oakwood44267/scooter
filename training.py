@@ -13,7 +13,7 @@ from tensorflow.keras.layers import *
 from tensorflow.keras.utils import to_categorical
 
 # Create Techie Pizza's machine learning model.
-# "Default" / initial model achieves about 75% accuracy.
+# "Default" / initial model achieves about 70% accuracy.
 def techie_pizza_model(trainX, trainy):
     n_timesteps, n_features, n_outputs = trainX.shape[1], trainX.shape[2], trainy.shape[1]
 
@@ -24,12 +24,14 @@ def techie_pizza_model(trainX, trainy):
 
     ######################################################################################
     # Convolutional layer(s)
-    model.add(Conv1D(filters=8, kernel_size=8, activation='relu'))
-    model.add(MaxPooling1D(8))      # Usually you follow convolutional layer with pooling
+    model.add(Conv1D(filters=8, kernel_size=12, activation='relu'))
+    model.add(MaxPooling1D(12))      # Usually you follow convolutional layer with pooling
                                     # of size equal to or less than kernel size.
-    #model.add(Dropout(0.2))        # Dropout between layers can help prevent overfit
+    model.add(Dropout(0.2))        # Dropout between layers can help prevent overfit
                                     # with limited training data.
-
+    model.add(Conv1D(filters=8, kernel_size=12, activation='relu'))
+    model.add(MaxPooling1D(12))      # Usually you follow convolutional layer with pooling
+    model.add(Dropout(0.2))        # Dropout between layers can help prevent overfit
     # LSTM layer(s)
     #model.add(LSTM(30, recurrent_dropout=0.2))
     #model.add(Dropout(0.2))
@@ -38,8 +40,8 @@ def techie_pizza_model(trainX, trainy):
     model.add(Flatten())
 
     # Dense layer(s)
-    #model.add(Dense(36, activation='relu'))
-    #model.add(Dropout(0.2))
+    model.add(Dense(36, activation='relu'))
+    model.add(Dropout(0.2))
 
     ######################################################################################
 
