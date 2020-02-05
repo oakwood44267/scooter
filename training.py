@@ -57,13 +57,11 @@ def techie_pizza_model(trainX, trainy):
 
 # fit and evaluate a model
 # from https://machinelearningmastery.com/how-to-develop-rnn-models-for-human-activity-recognition-time-series-classification/
-def evaluate_model(trainX, trainy, testX=None, testy=None):
-    verbose, batch_size = 1, 32
-
+def evaluate_model(trainX, trainy, testX, testy):
     model = our_model(trainX, trainy)
 
     # Train network
-    model.fit(trainX, trainy, epochs=epochs, batch_size=batch_size, verbose=verbose)
+    model.fit(trainX, trainy, epochs=epochs, batch_size=batch_size, verbose=verbose, validation_data=(testX, testy))
 
     # Use trained network to predict hold-back data
     predY = model.predict(testX)
@@ -138,13 +136,15 @@ def load_labels(paths):
 our_model = techie_pizza_model
 
 epochs = 200
+verbose = 1
+batch_size = 32
 
 # Load labelled data
 categories = [ 'Sidewalk', 'Street' ]
 
 X, y = load_labels(['sidewalk/good/*', 'street/good/*'])
 
-# Shuffle the data for better learning
+# Shuffle the data
 X, y = shuffle(X, y, random_state=640)
 
 # Hold back 20% of the data to measure accuracy
