@@ -24,14 +24,17 @@ def techie_pizza_model(trainX, trainy):
 
     ######################################################################################
     # Convolutional layer(s)
-    model.add(Conv1D(filters=8, kernel_size=12, activation='relu'))
+    model.add(Conv1D(filters=16, kernel_size=12, activation='relu'))
     model.add(MaxPooling1D(12))      # Usually you follow convolutional layer with pooling
                                     # of size equal to or less than kernel size.
-    model.add(Dropout(0.2))        # Dropout between layers can help prevent overfit
+    model.add(Dropout(0.15))        # Dropout between layers can help prevent overfit
                                     # with limited training data.
-    model.add(Conv1D(filters=8, kernel_size=12, activation='relu'))
-    model.add(MaxPooling1D(12))      # Usually you follow convolutional layer with pooling
-    model.add(Dropout(0.2))        # Dropout between layers can help prevent overfit
+    model.add(Conv1D(filters=16, kernel_size=4, activation='relu'))
+    model.add(MaxPooling1D(3))      # Usually you follow convolutional layer with pooling
+    model.add(Dropout(0.25))        # Dropout between layers can help prevent overfit
+    model.add(Conv1D(filters=24, kernel_size=4, activation='relu'))
+    model.add(MaxPooling1D(3))      # Usually you follow convolutional layer with pooling
+    model.add(Dropout(0.25))        # Dropout between layers can help prevent overfit
     # LSTM layer(s)
     #model.add(LSTM(30, recurrent_dropout=0.2))
     #model.add(Dropout(0.2))
@@ -40,9 +43,10 @@ def techie_pizza_model(trainX, trainy):
     model.add(Flatten())
 
     # Dense layer(s)
-    model.add(Dense(36, activation='relu'))
-    model.add(Dropout(0.2))
-
+   # model.add(Dense(50, activation='relu'))
+    #model.add(Dropout(0.3))
+    model.add(Dense(60, activation='relu'))
+    model.add(Dropout(0.25))
     ######################################################################################
 
     # Final layer that predicts which category
@@ -77,7 +81,7 @@ def evaluate_model(trainX, trainy, testX, testy):
 
 # run an experiment
 # from https://machinelearningmastery.com/how-to-develop-rnn-models-for-human-activity-recognition-time-series-classification/
-def run_experiment(trainX, trainy, testX, testy, repeats=7):
+def run_experiment(trainX, trainy, testX, testy, repeats=14):
     scores = []
     losses = []
 
