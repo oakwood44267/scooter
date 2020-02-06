@@ -165,5 +165,7 @@ X, y = shuffle(X, y, random_state=640)
 run_experiment(X, y)
 
 print('Classification Report')
-print(classification_report(comparey, predy, np.arange(len(categories)), categories))
+print(classification_report(comparey, predy, np.arange(len(categories)), categories, digits=3))
+cm = confusion_matrix(comparey, predy)
 
+print(cm)
