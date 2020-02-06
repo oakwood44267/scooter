@@ -155,9 +155,9 @@ batch_size = 32
 repeats = 14
 
 # Load labelled data
-categories = [ 'Sidewalk', 'Street' ]
+categories = [ 'Sidewalk', 'Street', 'Standing' ]
 
-X, y = load_labels(['sidewalk/good/*', 'street/good/*'])
+X, y = load_labels(['sidewalk/good/*', 'street/good/*', 'standing/good/*'])
 
 # Shuffle the data
 X, y = shuffle(X, y, random_state=640)
