@@ -10,6 +10,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import *
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 
 # Create Techie Pizza's machine learning model.
@@ -65,7 +66,9 @@ def evaluate_model(trainX, trainy, testX, testy):
     model = our_model(trainX, trainy)
 
     # Train network
-    model.fit(trainX, trainy, epochs=epochs, batch_size=batch_size, verbose=verbose, validation_data=(testX, testy))
+    model.fit(trainX, trainy, epochs=epochs, batch_size=batch_size, verbose=verbose,
+            validation_data=(testX, testy),
+            callbacks=[EarlyStopping(monitor='loss', patience=patience, restore_best_weights=True)])
 
     # Use trained network to predict hold-back data
     predY = model.predict(testX)
@@ -149,7 +152,8 @@ our_model = techie_pizza_model
 predy = np.empty(0)
 comparey = np.empty(0)
 
-epochs = 200
+epochs = 500
+patience = 60
 verbose = 1
 batch_size = 32
 repeats = 14
