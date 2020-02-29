@@ -14,7 +14,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
 
 # Create Techie Pizza's machine learning model.
-# "Default" / initial model achieves about 70% accuracy.
+# Achieves over 99% accuracy on verification data.
 def techie_pizza_model(trainX, trainy):
     n_timesteps, n_features, n_outputs = trainX.shape[1], trainX.shape[2], trainy.shape[1]
 
@@ -23,32 +23,27 @@ def techie_pizza_model(trainX, trainy):
     # Input to model
     model.add(Input(shape=(n_timesteps, n_features)))
 
-    ######################################################################################
-    # Convolutional layer(s)
+    ############################################################################
+    # Convolutional layer 1
     model.add(Conv1D(filters=16, kernel_size=12, activation='relu'))
-    model.add(MaxPooling1D(12))      # Usually you follow convolutional layer with pooling
-                                    # of size equal to or less than kernel size.
-    model.add(Dropout(0.15))        # Dropout between layers can help prevent overfit
-                                    # with limited training data.
-    model.add(Conv1D(filters=16, kernel_size=4, activation='relu'))
-    model.add(MaxPooling1D(3))      # Usually you follow convolutional layer with pooling
-    model.add(Dropout(0.25))        # Dropout between layers can help prevent overfit
-    model.add(Conv1D(filters=24, kernel_size=4, activation='relu'))
-    model.add(MaxPooling1D(3))      # Usually you follow convolutional layer with pooling
-    model.add(Dropout(0.25))        # Dropout between layers can help prevent overfit
-    # LSTM layer(s)
-    #model.add(LSTM(30, recurrent_dropout=0.2))
-    #model.add(Dropout(0.2))
-    
-    # Flatten before Dense layer(s)
-    model.add(Flatten())
+    model.add(MaxPooling1D(12))
+    model.add(Dropout(0.15))
 
-    # Dense layer(s)
-   # model.add(Dense(50, activation='relu'))
-    #model.add(Dropout(0.3))
+    # Convolutional layer 2
+    model.add(Conv1D(filters=16, kernel_size=4, activation='relu'))
+    model.add(MaxPooling1D(3))
+    model.add(Dropout(0.25))
+
+    # Convolutional layer 3
+    model.add(Conv1D(filters=24, kernel_size=4, activation='relu'))
+    model.add(MaxPooling1D(3))
+    model.add(Dropout(0.25))
+
+    # Dense layer
+    model.add(Flatten())
     model.add(Dense(60, activation='relu'))
     model.add(Dropout(0.25))
-    ######################################################################################
+    ############################################################################
 
     # Final layer that predicts which category
     model.add(Dense(n_outputs, activation='softmax'))
